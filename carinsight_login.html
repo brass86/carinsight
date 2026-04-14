@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarInsight — Inloggen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f5f4f0; --bg2:#ffffff; --bg3:#f8f7f4; --bg4:#eeecea;
+  --border:rgba(26,31,46,0.08); --border2:rgba(26,31,46,0.14);
+  --accent:#4a72b8; --accent2:#2d4f8a; --accent-lt:#eef3fc; --accent-md:#a8c0e8;
+  --green:#52a875; --green-bg:#e8f5ee; --green-bd:#a8d8b8;
+  --coral:#d4784a; --coral-bg:#fdf0e8; --coral-bd:#f0b898;
+  --red:#c0404a; --red-bg:#fdeaec; --red-bd:#e8a0a8;
+  --text:#1a1f2e; --text2:#4a5568; --text3:#8896a8;
+  --shadow:0 1px 3px rgba(26,31,46,.06),0 2px 4px rgba(26,31,46,.04);
+  --shadow-md:0 8px 32px rgba(26,31,46,.10),0 2px 8px rgba(26,31,46,.06);
+  --sans:'Outfit',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--sans);color:var(--text);font-size:14px;
+  background:#f5f4f0;
+  display:flex;align-items:center;justify-content:center;min-height:100vh;
+  position:relative;overflow:hidden;
+}
+
+/* Subtiele achtergrond decoratie */
+body::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 20%, rgba(74,114,184,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 85% 70%, rgba(82,168,117,0.06) 0%, transparent 55%);
+  pointer-events:none;
+}
+
+.login-wrap{
+  width:100%;max-width:420px;padding:24px;position:relative;z-index:1;
+  animation:fadeUp .3s ease;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* Header */
+.login-header{text-align:center;margin-bottom:32px;}
+.logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:20px;}
+.logo-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:linear-gradient(135deg,#4a72b8,#2d4f8a);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(74,114,184,.28);
+}
+.logo-icon svg{width:20px;height:20px;}
+.logo-name{font-size:20px;font-weight:700;letter-spacing:-.4px;color:var(--text);}
+.logo-name em{font-style:normal;color:var(--accent);}
+.login-title{font-size:22px;font-weight:700;letter-spacing:-.4px;color:var(--text);margin-bottom:6px;}
+.login-sub{font-size:13px;color:var(--text3);line-height:1.5;}
+
+/* Card */
+.login-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:32px;
+  box-shadow:var(--shadow-md);
+}
+
+/* Form */
+.form-group{margin-bottom:18px;}
+.form-label{
+  display:block;font-size:12px;font-weight:600;color:var(--text2);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;
+}
+.form-input{
+  width:100%;padding:11px 14px;
+  border:1.5px solid var(--border2);border-radius:9px;
+  background:var(--bg3);color:var(--text);
+  font-family:var(--sans);font-size:14px;
+  outline:none;transition:border-color .15s,box-shadow .15s;
+}
+.form-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(74,114,184,.12);
+  background:#fff;
+}
+.form-input::placeholder{color:var(--text3);}
+
+/* Password toggle */
+.input-wrap{position:relative;}
+.input-wrap .form-input{padding-right:42px;}
+.pw-toggle{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;color:var(--text3);
+  padding:4px;border-radius:4px;transition:color .15s;
+  display:flex;align-items:center;
+}
+.pw-toggle:hover{color:var(--accent);}
+
+/* Vergeten wachtwoord */
+.form-footer-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.remember{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text2);cursor:pointer;}
+.remember input{width:15px;height:15px;accent-color:var(--accent);cursor:pointer;}
+.forgot{font-size:12px;color:var(--accent);text-decoration:none;font-weight:500;}
+.forgot:hover{text-decoration:underline;}
+
+/* Button */
+.btn-login{
+  width:100%;padding:12px;
+  background:linear-gradient(135deg,#4a72b8,#2d4f8a);
+  color:#fff;border:none;border-radius:9px;
+  font-family:var(--sans);font-size:14px;font-weight:600;
+  cursor:pointer;transition:all .15s;
+  box-shadow:0 2px 8px rgba(74,114,184,.28);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(74,114,184,.38);}
+.btn-login:active{transform:translateY(0);}
+.btn-login.loading{opacity:.7;pointer-events:none;}
+
+/* Error */
+.error-msg{
+  display:none;
+  background:var(--red-bg);border:1px solid var(--red-bd);
+  border-radius:9px;padding:11px 14px;
+  font-size:13px;color:var(--red);font-weight:500;
+  margin-bottom:18px;
+}
+.error-msg.show{display:flex;align-items:center;gap:8px;}
+
+/* Success */
+.success-msg{
+  display:none;
+  background:var(--green-bg);border:1px solid var(--green-bd);
+  border-radius:9px;padding:11px 14px;
+  font-size:13px;color:#1a5c3a;font-weight:500;
+  margin-bottom:18px;
+}
+.success-msg.show{display:flex;align-items:center;gap:8px;}
+
+/* Divider */
+.divider{
+  display:flex;align-items:center;gap:12px;
+  margin:24px 0 0;
+  font-size:12px;color:var(--text3);
+}
+.divider::before,.divider::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+
+/* Footer */
+.login-footer{
+  text-align:center;margin-top:24px;
+  font-size:12px;color:var(--text3);
+}
+.login-footer a{color:var(--accent);text-decoration:none;}
+.login-footer a:hover{text-decoration:underline;}
+
+/* Dealer badge */
+.dealer-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:20px;padding:5px 12px;
+  font-size:11px;font-family:var(--mono);color:var(--text2);
+  margin-bottom:16px;
+}
+.dealer-dot{width:6px;height:6px;border-radius:50%;background:var(--green);}
+</style>
+</head>
+<body>
+
+<div class="login-wrap">
+  <div class="login-header">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <span class="logo-name">Car<em>Insight</em></span>
+    </div>
+    <div class="login-title">Welkom terug</div>
+    <div class="login-sub">Log in op jouw dealeromgeving</div>
+  </div>
+
+  <div class="login-card">
+    <div class="error-msg" id="error-msg">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M7.5 4.5v3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="7.5" cy="10.5" r=".7" fill="currentColor"/></svg>
+      <span id="error-text">Gebruikersnaam of wachtwoord onjuist.</span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="email">E-mailadres</label>
+      <input type="email" class="form-input" id="email" placeholder="naam@dealership.nl" autocomplete="email">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="password">Wachtwoord</label>
+      <div class="input-wrap">
+        <input type="password" class="form-input" id="password" placeholder="••••••••" autocomplete="current-password">
+        <button class="pw-toggle" onclick="togglePw()" type="button" title="Wachtwoord tonen">
+          <svg id="pw-eye" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-footer-row">
+      <label class="remember">
+        <input type="checkbox" id="remember"> Onthoud mij
+      </label>
+      <a href="#" class="forgot" onclick="forgotPw(event)">Wachtwoord vergeten?</a>
+    </div>
+
+    <button class="btn-login" id="login-btn" onclick="doLogin()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+      </svg>
+      Inloggen
+    </button>
+
+    <div class="divider">Beveiligde verbinding</div>
+  </div>
+
+  <div class="login-footer">
+    Problemen met inloggen? <a href="mailto:support@carinsight.nl">Neem contact op</a><br><br>
+    <span style="font-size:11px;opacity:.6">© 2026 CarInsight · Alle rechten voorbehouden</span>
+  </div>
+</div>
+
+<script>
+// ═══ CONFIGURATIE ═══
+const API_URL = 'https://carinsight.nl';
+
+// Tijdelijke hardcoded credentials (later vervangen door echte API authenticatie)
+const USERS = [
+  { email: 'vandijk@carinsight.nl', password: 'VanDijk2026!', dealer: 'Van Dijk Auto\'s', vestiging: 'Eindhoven' }
+];
+
+function togglePw(){
+  const input = document.getElementById('password');
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+function showError(msg){
+  const el = document.getElementById('error-msg');
+  document.getElementById('error-text').textContent = msg;
+  el.classList.add('show');
+}
+
+function hideError(){
+  document.getElementById('error-msg').classList.remove('show');
+}
+
+async function doLogin(){
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const btn = document.getElementById('login-btn');
+
+  hideError();
+
+  if(!email || !password){
+    showError('Vul je e-mailadres en wachtwoord in.');
+    return;
+  }
+
+  btn.classList.add('loading');
+  btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Bezig...';
+
+  // Simuleer even laadtijd
+  await new Promise(r => setTimeout(r, 800));
+
+  const user = USERS.find(u => u.email === email && u.password === password);
+
+  if(user){
+    // Sla sessie op
+    sessionStorage.setItem('ci_user', JSON.stringify(user));
+    sessionStorage.setItem('ci_loggedin', '1');
+    // Redirect naar dashboard
+    window.location.href = 'carinsight_59.html';
+  } else {
+    btn.classList.remove('loading');
+    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Inloggen';
+    showError('E-mailadres of wachtwoord onjuist. Probeer opnieuw.');
+    document.getElementById('password').value = '';
+    document.getElementById('password').focus();
+  }
+}
+
+function forgotPw(e){
+  e.preventDefault();
+  alert('Neem contact op met support@carinsight.nl voor een nieuw wachtwoord.');
+}
+
+// Enter key support
+document.addEventListener('keydown', e => {
+  if(e.key === 'Enter') doLogin();
+});
+
+// Check of al ingelogd
+if(sessionStorage.getItem('ci_loggedin') === '1'){
+  window.location.href = 'carinsight_59.html';
+}
+</script>
+</body>
+</html>

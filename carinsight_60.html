@@ -626,7 +626,7 @@ async function doLogin(){
     sessionStorage.setItem('ci_user', JSON.stringify(user));
     sessionStorage.setItem('ci_loggedin', '1');
     // Redirect naar dashboard
-    window.location.href = 'carinsight_59.html';
+    showDashboard(user);
   } else {
     btn.classList.remove('loading');
     btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Inloggen';
@@ -648,7 +648,7 @@ document.addEventListener('keydown', e => {
 
 // Check of al ingelogd
 if(sessionStorage.getItem('ci_loggedin') === '1'){
-  window.location.href = 'carinsight_59.html';
+  showDashboard(user);
 }
 </script>
 </div>
